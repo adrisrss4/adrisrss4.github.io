@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convertir JPG a PNG gratis online | Herramienta rápida</title>
+  <meta name="description" content="Convierte imágenes JPG a PNG gratis, rápido y sin instalar programas. Sube tu archivo y descarga tu imagen en segundos.">
+  <meta name="keywords" content="convertir JPG a PNG, JPG a PNG online, convertir imágenes, herramienta gratis, convertir fotos">
+  <meta name="robots" content="index, follow">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: 18px;
+      color: #444;
+      margin-bottom: 20px;
+    }
+    input[type="file"] {
+      margin: 15px 0;
+    }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 15px;
+      background: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+    a:hover {
+      background: #0056b3;
+    }
+    p {
+      font-size: 14px;
+      color: #555;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Convertir JPG a PNG</h1>
+    <h2>Herramienta online gratuita</h2>
+    <input type="file" id="upload" accept="image/jpeg">
+    <canvas id="canvas" style="display:none;"></canvas>
+    <br>
+    <a id="download" style="display:none;">Descargar PNG</a>
+
+    <p>
+      Convierte tus imágenes de <strong>JPG a PNG gratis</strong>, directamente desde tu navegador, 
+      sin necesidad de instalar programas. Solo selecciona tu archivo, espera unos segundos 
+      y descarga tu imagen convertida en formato PNG.
+    </p>
+  </div>
+
+  <script>
+    const upload = document.getElementById("upload");
+    const canvas = document.getElementById("canvas");
+    const download = document.getElementById("download");
+
+    upload.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const img = new Image();
+        img.onload = () => {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0);
+
+          const pngUrl = canvas.toDataURL("image/png");
+
+          download.href = pngUrl;
+          download.download = "imagen_convertida.png";
+          download.style.display = "inline-block";
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  </script>
+</body>
+</html>
